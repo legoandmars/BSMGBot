@@ -1,0 +1,7 @@
+{
+    "googleCustomSearchEngineId":"CSEIDHere",
+    "googleApiKey":"GoogleAPIKeyHere",
+    "discordGuildID":"DiscordServerIDHere",
+    "discordChannelID":"DiscordChannelToSendMessagesInIDHere",
+    "discordBotToken":"DiscordBotTokenHere"
+}
