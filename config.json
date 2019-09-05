@@ -3,5 +3,6 @@
     "googleApiKey":"GoogleAPIKeyHere",
     "discordGuildID":"DiscordServerIDHere",
     "discordChannelID":"DiscordChannelToSendMessagesInIDHere",
-    "discordBotToken":"DiscordBotTokenHere"
+    "discordBotToken":"DiscordBotTokenHere",
+    "dictionaryCollegiateKey":"MWDictionaryCollegiateKey"
 }
