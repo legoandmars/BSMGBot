@@ -61,44 +61,48 @@ function randomWordFunction(){
             }
             i++;
         }
+        concString = concString.substring(0, concString.length - 1);
         var currentName = "Beat Saber "+formattedMWord+" Group";
-        var messageString = "We are now the "+currentName+".\n\n"+formattedMWord+" Definition:```"+concString+"```";     
-        imageClient.search(formattedMWord, {size:"medium"})
-        .then(images => {
-            //console.log(images[0].url);
-            //var myimg = loadImage(images[0].url);
-            //console.log(myimg)
-            loadImage(images[0].url).then((image) => {
-                //ctx.drawImage(image, 50, 0, 70, 70)
-                var canvas = createCanvas(512, 512)
-                var ctx = canvas.getContext('2d')
-                ctx.drawImage(image, 0, 0, 512, 512)    
-                loadImage("BSMG_TRANSPARENT.png").then((image2) => {
-                    ctx.drawImage(image2, 0, 0, 512, 512)   
-                    var bufferedCanvas = canvas.toBuffer();   
-                    var base64Canvas = canvas.toDataURL(); 
-                    fs.writeFileSync('images/BeatSaber'+formattedMWord+'Group.png', bufferedCanvas)
-                    client.user.setAvatar(bufferedCanvas)
-                        .then(user => console.log(`New avatar set!`))
-                        .catch(console.error);
-                    bsmgGuild.edit({
-                        name: currentName,
-                        icon: base64Canvas
+        var messageString = "We are now the "+currentName+".\n\n"+formattedMWord+" Definition:```"+concString+"```";  
+        if(concString!=""){   
+            imageClient.search(formattedMWord, {size:"medium"})
+            .then(images => {
+                //console.log(images[0].url);
+                //var myimg = loadImage(images[0].url);
+                //console.log(myimg)
+                loadImage(images[0].url).then((image) => {
+                    //ctx.drawImage(image, 50, 0, 70, 70)
+                    var canvas = createCanvas(512, 512)
+                    var ctx = canvas.getContext('2d')
+                    ctx.drawImage(image, 0, 0, 512, 512)    
+                    loadImage("BSMG_TRANSPARENT.png").then((image2) => {
+                        ctx.drawImage(image2, 0, 0, 512, 512)   
+                        var bufferedCanvas = canvas.toBuffer();   
+                        var base64Canvas = canvas.toDataURL(); 
+                        fs.writeFileSync('images/BeatSaber'+formattedMWord+'Group.png', bufferedCanvas)
+                        client.user.setAvatar(bufferedCanvas)
+                            .then(user => console.log(`New avatar set!`))
+                            .catch(console.error);
+                        bsmgGuild.edit({
+                            name: currentName,
+                            icon: base64Canvas
+                        })
+                            .then(g => console.log(`Changed server name to ${g} and icon to ${g.iconURL}`))
+                            .catch(console.error);   
+                        var attachment = new Attachment(bufferedCanvas);
+                        currentChannel.send(messageString,attachment); 
                     })
-                        .then(g => console.log(`Changed server name to ${g} and icon to ${g.iconURL}`))
-                        .catch(console.error);   
-                    var attachment = new Attachment(bufferedCanvas);
-                    currentChannel.send(messageString,attachment); 
-                })
-                //console.log('<img src="' + canvas.toDataURL() + '" />')
-            }).catch(error =>{
-                console.log("ERR");
-                console.error(error);
-                randomWordFunction();
-            });
-        });   
-    
-        console.log(meaningChart);
+                    //console.log('<img src="' + canvas.toDataURL() + '" />')
+                }).catch(error =>{
+                    console.log("ERR");
+                    console.error(error);
+                    randomWordFunction();
+                });
+            });   
+        }else{
+            randomWordFunction();
+        }
+        //console.log(meaningChart);
     })
     .catch(error => {
         console.log("NO DEFINITION");
