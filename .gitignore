@@ -89,3 +89,4 @@ typings/
 
 # Cached images
 .images/
+img.png*
